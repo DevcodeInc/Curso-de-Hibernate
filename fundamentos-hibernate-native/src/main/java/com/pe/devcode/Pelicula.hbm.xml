@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-mar-2018 17:49:01 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.pe.devcode.Pelicula" table="PELICULA">
+		<id name="peliculaId" type="java.lang.Integer">
+			<column name="PELICULAID" />
+			<generator class="increment" />
+		</id>
+		<property name="nombre" type="java.lang.String">
+			<column name="NOMBRE" />
+		</property>
+		
+		<one-to-one name="metadata" class="com.pe.devcode.Metadata" cascade="save-update"/>
+		
+		<set name="generos" table="GENERO" inverse="true" lazy="true">
+			<key>
+				<column name="PELICULAID" />
+			</key>
+			<one-to-many class="com.pe.devcode.Genero" />
+		</set>
+		
+		<list name="actores" table="ACTOR" inverse="true" lazy="true" cascade="all, delete-orphan" >
+			<key>
+				<column name="PELICULAID" />
+			</key>
+			<list-index></list-index>
+			<one-to-many class="com.pe.devcode.Actor" />
+		</list>
+		
+		<many-to-one name="distribuidor" class="com.pe.devcode.Distribuidor"
+			cascade="save-update" column="DISTRIBUIDOR" />
+			
+		<set name="guionistas" table="GUIONISTA" inverse="true" lazy="true" cascade="save-update">
+			<key>
+				<column name="PELICULAID" />
+			</key>
+			<many-to-many class="com.pe.devcode.Guionista" column="GUIONISTAID" />
+		</set>
+		
+        <map name="recaudados" table="RECAUDADO"  inverse="true" lazy="true" cascade="save-update">
+            <key column="PELICULAID" />
+            <index column = "RECAUDADOID" type = "java.lang.String"/>
+            <one-to-many class="com.pe.devcode.Recaudado" />
+        </map>
+		
+		<property name="calidad">
+			<column name="CALIDAD" />
+			<type name="org.hibernate.type.EnumType">
+				<param name="type">12</param>
+				<param name="enumClass">com.pe.devcode.Calidad</param>
+			</type>
+		</property>
+		
+	</class>
+</hibernate-mapping>

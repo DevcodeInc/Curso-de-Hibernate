@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-mar-2018 0:45:06 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pe.devcode.Metadata" table="METADATA">
+        <id name="metadataId" type="java.lang.Integer">
+            <column name="METADATAID" />
+            <generator class="increment" />
+        </id>
+        <property name="anio" type="java.lang.Integer">
+            <column name="ANIO" />
+        </property>
+        <property name="formato" type="java.lang.String">
+            <column name="FORMATO" />
+        </property>
+        <one-to-one name="pelicula" class="com.pe.devcode.Pelicula"></one-to-one>
+    </class>
+</hibernate-mapping>
